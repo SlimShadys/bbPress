@@ -119,6 +119,18 @@ function bbp_is_forum( $post_id = 0 ) {
 
 	// Supplied ID is a forum
 	if ( ! empty( $post_id ) && ( bbp_get_forum_post_type() === get_post_type( $post_id ) ) ) {
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		$result = bbp_get_user_role($current_user_id);
+		
+		// If the current User is Keymaster, leave it Keymaster
+		// otherwise, switch to Participant
+		if ( $result != 'bbp_keymaster' ) {
+			bbp_set_user_role( $current_user_id, "bbp_participant" );	
+		}		
+		
 		$retval = true;
 	}
 

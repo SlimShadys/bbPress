@@ -179,7 +179,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 
 			break;
 
-		// Topic User
+		// Topic User / Default
 		case bbp_get_topicuser_role() :
 			$caps = array(
 
@@ -225,7 +225,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 
 			break;
 
-		// Participant/Default
+		// Participant
 		case bbp_get_participant_role() :
 		default :
 			$caps = array(

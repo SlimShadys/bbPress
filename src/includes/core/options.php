@@ -529,7 +529,7 @@ function bbp_allow_global_access( $default = 1 ) {
  * @param string $default Optional. Default value empty
  * @return string The default forums user role
  */
-function bbp_get_default_role( $default = 'bbp_participant' ) {
+function bbp_get_default_role( $default = 'bbp_topicuser' ) {
 
 	// Filter & return
 	return apply_filters( 'bbp_get_default_role', get_option( '_bbp_default_role', $default ) );

@@ -169,6 +169,18 @@ function bbp_is_single_forum() {
 
 	// Single and a match
 	if ( is_singular( bbp_get_forum_post_type() ) || bbp_is_query_name( 'bbp_single_forum' ) ) {
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		$result = bbp_get_user_role($current_user_id);
+		
+		// If the current User is Keymaster, leave it Keymaster
+		// otherwise, switch to Participant
+		if ( $result != 'bbp_keymaster' ) {
+			bbp_set_user_role( $current_user_id, "bbp_participant" );	
+		}
+
 		$retval = true;
 	}
 

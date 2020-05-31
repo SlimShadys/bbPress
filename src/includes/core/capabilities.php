@@ -179,6 +179,52 @@ function bbp_get_caps_for_role( $role = '' ) {
 
 			break;
 
+		// Topic User
+		case bbp_get_topicuser_role() :
+			$caps = array(
+
+				// Primary caps
+				'spectate'              => true,
+				'participate'           => true,
+				'moderate'              => true,
+				'throttle'              => true,
+				'view_trash'            => true,
+				'assign_moderators'     => false,
+
+				// Forum caps
+				'publish_forums'        => false,
+				'edit_forums'           => false,
+				'edit_others_forums'    => false,
+				'delete_forums'         => false,
+				'delete_others_forums'  => false,
+				'read_private_forums'   => true,
+				'read_hidden_forums'    => false,
+
+				// Topic caps
+				'publish_topics'        => true,
+				'edit_topics'           => true,
+				'edit_others_topics'    => false,
+				'delete_topics'         => true,
+				'delete_others_topics'  => false,
+				'read_private_topics'   => true,
+
+				// Reply caps
+				'publish_replies'       => true,
+				'edit_replies'          => true,
+				'edit_others_replies'   => false,
+				'delete_replies'        => true,
+				'delete_others_replies' => false,
+				'read_private_replies'  => true,
+
+				// Topic tag caps
+				'manage_topic_tags'     => false,
+				'edit_topic_tags'       => false,
+				'delete_topic_tags'     => false,
+				'assign_topic_tags'     => true
+			);
+
+			break;
+
 		// Participant/Default
 		case bbp_get_participant_role() :
 		default :
@@ -449,6 +495,19 @@ function bbp_get_moderator_role() {
 
 	// Filter & return
 	return apply_filters( 'bbp_get_moderator_role', 'bbp_moderator' );
+}
+
+/**
+ * The TopicUser role for registered user that can participate in forums
+ *
+ * @since 2.0.0 bbPress (r3410)
+ *
+ * @return string
+ */
+function bbp_get_topicuser_role() {
+
+	// Filter & return
+	return apply_filters( 'bbp_get_topicuser_role', 'bbp_topicuser' );
 }
 
 /**

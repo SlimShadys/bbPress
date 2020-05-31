@@ -246,6 +246,31 @@ function bbp_is_single_topic() {
 
 	// Single and a match
 	if ( is_singular( bbp_get_topic_post_type() ) || bbp_is_query_name( 'bbp_single_topic' ) ) {
+		
+		global $author_id;
+		global $id_of_topic;
+		$id_of_topic = 0;
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current topic ID
+		$id_of_topic = bbp_get_topic_id(-1);
+		
+		// Get current topic author ID
+		$author_id = get_post_field( 'post_author', $topic_id ); 
+		
+		// If the author of the topic, is the same as the one logged in
+		// then set this user to "Moderator" (for now)
+		if ( $author_id == $current_user_id ) {
+			bbp_set_user_role( $current_user_id, "bbp_moderator" );
+		}
+		
+		// Otherwise, leave it as participant
+		else {
+			bbp_set_user_role( $current_user_id, "bbp_participant" );
+		}
+		
 		$retval = true;
 	}
 

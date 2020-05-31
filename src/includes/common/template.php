@@ -717,6 +717,19 @@ function bbp_is_single_user() {
 
 	// Check query
 	if ( ! empty( $wp_query->bbp_is_single_user ) && ( true === $wp_query->bbp_is_single_user ) ) {
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+		
+		// If the current User is Keymaster, leave it Keymaster
+		// otherwise, switch to Topic User
+		if ( $result != 'bbp_keymaster' ) {
+			bbp_set_user_role( $current_user_id, "bbp_topicuser" );	
+		}
+		
 		$retval = true;
 	}
 

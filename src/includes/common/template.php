@@ -284,15 +284,23 @@ function bbp_is_single_topic() {
 		// Get current topic author ID
 		$author_id = get_post_field( 'post_author', $topic_id ); 
 		
-		// If the author of the topic, is the same as the one logged in
-		// then set this user to "Topic User"
-		if ( $author_id == $current_user_id ) {
-			bbp_set_user_role( $current_user_id, "bbp_topicuser" );
-		}
-		
-		// Otherwise, leave it as participant
-		else {
-			bbp_set_user_role( $current_user_id, "bbp_participant" );
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+
+		// If the author of the topic, is Keymaster
+		// ignore everything
+		if ( $result != 'bbp_keymaster' ) {
+			
+			// If the author of the topic, is the same as the one logged in
+			// then set this user to "Topic User"
+			if ( $author_id == $current_user_id ) {
+				bbp_set_user_role( $current_user_id, "bbp_topicuser" );
+			}
+
+			// Otherwise, leave it as participant
+			else {
+				bbp_set_user_role( $current_user_id, "bbp_participant" );
+			}
 		}
 		
 		$retval = true;

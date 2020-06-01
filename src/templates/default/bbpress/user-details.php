@@ -43,7 +43,7 @@ do_action( 'bbp_template_before_user_details' ); ?>
 				</span>
 			</li>
 
-			<?php if ( bbp_is_engagements_active() ) : ?>
+			<!-- <?php if ( bbp_is_engagements_active() ) : ?>
 				<li class="<?php if ( bbp_is_single_user_engagements() ) : ?>current<?php endif; ?>">
 					<span class='bbp-user-engagements-created-link'>
 						<a href="<?php bbp_user_engagements_url(); ?>" title="<?php printf( esc_attr__( "%s's Engagements", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Engagements', 'bbpress' ); ?></a>
@@ -57,21 +57,27 @@ do_action( 'bbp_template_before_user_details' ); ?>
 						<a href="<?php bbp_favorites_permalink(); ?>" title="<?php printf( esc_attr__( "%s's Favorites", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Favorites', 'bbpress' ); ?></a>
 					</span>
 				</li>
-			<?php endif; ?>
+			<?php endif; ?> -->
 
 			<?php if ( bbp_is_user_home() || current_user_can( 'edit_user', bbp_get_displayed_user_id() ) ) : ?>
 
-				<?php if ( bbp_is_subscriptions_active() ) : ?>
+				 <!-- <?php if ( bbp_is_subscriptions_active() ) : ?>
 					<li class="<?php if ( bbp_is_subscriptions() ) : ?>current<?php endif; ?>">
 						<span class="bbp-user-subscriptions-link">
 							<a href="<?php bbp_subscriptions_permalink(); ?>" title="<?php printf( esc_attr__( "%s's Subscriptions", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Subscriptions', 'bbpress' ); ?></a>
 						</span>
 					</li>
-				<?php endif; ?>
+				<?php endif; ?> -->
 
 				<li class="<?php if ( bbp_is_single_user_edit() ) : ?>current<?php endif; ?>">
 					<span class="bbp-user-edit-link">
 						<a href="<?php bbp_user_profile_edit_url(); ?>" title="<?php printf( esc_attr__( "Edit %s's Profile", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Edit', 'bbpress' ); ?></a>
+					</span>
+				</li>
+				
+				<li class="<?php if ( bbp_is_single_user_edit() ) :?>current<?php endif; ?>">
+					<span class="bbp-user-edit-link">
+						<a href="https://progettogamp.altervista.org/wp-admin/options.php?page=plugin_delete_me_confirmation" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
 					</span>
 				</li>
 

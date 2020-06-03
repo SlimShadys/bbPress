@@ -1850,13 +1850,29 @@ function bbp_reply_edit_link( $args = array() ) {
 
 		// Get reply
 		$reply = bbp_get_reply( $r['id'] );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);	
 
-		// Bypass check if user has caps
-		if ( ! current_user_can( 'edit_others_replies' ) ) {
-
-			// User cannot edit or it is past the lock time
-			if ( empty( $reply ) || ! current_user_can( 'edit_reply', $reply->ID ) || bbp_past_edit_lock( $reply->post_date_gmt ) ) {
-				return;
+		// Get who made the reply 
+		$result_reply_author_id = bbp_get_reply_author_id();
+		
+		// If the current User is Keymaster or TopicUser or Participant,
+		// don't do the checks - they CAN edit
+		if ( $result != 'bbp_topicuser') {
+			if ( $result != 'bbp_keymaster') { //php is crazy, won't let me do a double check in a single if
+				if ( $result != 'bbp_participant') { //php is crazy, won't let me do a double check in a single if
+					// Bypass check if user has caps
+					if ( ! current_user_can( 'edit_others_replies' ) ) {
+						// User cannot edit or it is past the lock time
+						if ( empty( $reply ) || ! current_user_can( 'edit_reply', $reply->ID ) || bbp_past_edit_lock( $reply->post_date_gmt ) ) {
+							return;
+						}
+					}
+				}
 			}
 		}
 
@@ -1868,7 +1884,10 @@ function bbp_reply_edit_link( $args = array() ) {
 			return;
 		}
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+		if ($result_reply_author_id == $current_user_id) {	
+			if ( $result == 'bbp_topicuser' || $result == 'bbp_keymaster' || $result == 'bbp_participant') {
+					$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+			}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_edit_link', $retval, $r, $args );
@@ -1964,6 +1983,9 @@ function bbp_reply_trash_link( $args = array() ) {
 
 		// Get reply
 		$reply = bbp_get_reply( $r['id'] );
+		
+		// Get who made the reply 
+		$result_reply_author_id = bbp_get_reply_author_id();
 
 		// Bail if no reply or current user cannot delete
 		if ( empty( $reply ) || ! current_user_can( 'delete_reply', $reply->ID ) ) {
@@ -1987,8 +2009,10 @@ function bbp_reply_trash_link( $args = array() ) {
 			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'bbpress' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'bbp_toggle_reply_trash', 'sub_action' => 'delete',  'reply_id' => $reply->ID ) ), 'delete-'  . $reply->post_type . '_' . $reply->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'bbpress' ) ) . '\' );" class="bbp-reply-delete-link">' . $r['delete_text'] . '</a>';
 		}
 
+		if ($result_reply_author_id == $current_user_id) {	
 		// Process the admin links
 		$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_trash_link', $retval, $r, $args );

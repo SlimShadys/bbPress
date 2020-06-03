@@ -2703,14 +2703,14 @@ function bbp_topic_stick_link( $args = array() ) {
 		$stick_uri = add_query_arg( array( 'action' => 'bbp_toggle_topic_stick', 'topic_id' => $topic->ID ) );
 		$stick_uri = wp_nonce_url( $stick_uri, 'stick-topic_' . $topic->ID );
 
-		$stick_display = ( true === $is_sticky ) ? $r['unstick_text'] : $r['stick_text'];
-		$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="bbp-topic-sticky-link">' . $stick_display . '</a>';
+		//$stick_display = ( true === $is_sticky ) ? $r['unstick_text'] : $r['stick_text'];
+		//$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="bbp-topic-sticky-link">' . $stick_display . '</a>';
 
 		if ( empty( $is_sticky ) ) {
 			$super_uri = add_query_arg( array( 'action' => 'bbp_toggle_topic_stick', 'topic_id' => $topic->ID, 'super' => 1 ) );
 			$super_uri = wp_nonce_url( $super_uri, 'stick-topic_' . $topic->ID );
 
-			$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="bbp-topic-super-sticky-link">' . $r['super_text'] . '</a>';
+			//$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="bbp-topic-super-sticky-link">' . $r['super_text'] . '</a>';
 		} else {
 			$super_display = '';
 		}

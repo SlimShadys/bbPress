@@ -2409,6 +2409,7 @@ function bbp_topic_edit_link( $args = array() ) {
 		// Get current user ID
 		$current_user_id = bbp_get_current_user_id();
 
+		// Get current user role
 		$result = bbp_get_user_role($current_user_id);
 
 		// If the current User is Keymaster or TopicUser,
@@ -2704,6 +2705,12 @@ function bbp_topic_stick_link( $args = array() ) {
 		// Get topic
 		$topic = bbp_get_topic( $r['id'] );
 
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+
 		// Bail if no topic or current user cannot moderate
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
 			return;
@@ -2714,14 +2721,18 @@ function bbp_topic_stick_link( $args = array() ) {
 		$stick_uri = add_query_arg( array( 'action' => 'bbp_toggle_topic_stick', 'topic_id' => $topic->ID ) );
 		$stick_uri = wp_nonce_url( $stick_uri, 'stick-topic_' . $topic->ID );
 
-		//$stick_display = ( true === $is_sticky ) ? $r['unstick_text'] : $r['stick_text'];
-		//$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="bbp-topic-sticky-link">' . $stick_display . '</a>';
+		if ( $result == 'bbp_keymaster') {
+		$stick_display = ( true === $is_sticky ) ? $r['unstick_text'] : $r['stick_text'];
+		$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="bbp-topic-sticky-link">' . $stick_display . '</a>';
+		}
 
 		if ( empty( $is_sticky ) ) {
 			$super_uri = add_query_arg( array( 'action' => 'bbp_toggle_topic_stick', 'topic_id' => $topic->ID, 'super' => 1 ) );
 			$super_uri = wp_nonce_url( $super_uri, 'stick-topic_' . $topic->ID );
 
-			//$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="bbp-topic-super-sticky-link">' . $r['super_text'] . '</a>';
+			if ( $result == 'bbp_keymaster') {
+			$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="bbp-topic-super-sticky-link">' . $r['super_text'] . '</a>';
+			}
 		} else {
 			$super_display = '';
 		}
@@ -2770,13 +2781,22 @@ function bbp_topic_merge_link( $args = array() ) {
 		// Get topic
 		$topic = bbp_get_topic( $r['id'] );
 
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+
 		// Bail if no topic or current user cannot moderate
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
 			return;
 		}
 
 		$uri    = add_query_arg( array( 'action' => 'merge' ), bbp_get_topic_edit_url( $topic->ID ) );
-		//$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
+		
+		if ( $result == 'bbp_keymaster') {			
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_merge_link', $retval, $r, $args );
@@ -2820,6 +2840,12 @@ function bbp_topic_spam_link( $args = array() ) {
 		), 'get_topic_spam_link' );
 
 		$topic = bbp_get_topic( $r['id'] );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
 
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
 			return;
@@ -2828,7 +2854,10 @@ function bbp_topic_spam_link( $args = array() ) {
 		$display = bbp_is_topic_spam( $topic->ID ) ? $r['unspam_text'] : $r['spam_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_spam', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-topic_' . $topic->ID );
-		//$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
+		
+		if ( $result == 'bbp_keymaster') {
+		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_spam_link', $retval, $r, $args );

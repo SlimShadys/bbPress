@@ -2112,6 +2112,9 @@ function bbp_reply_move_link( $args = array() ) {
 		// Get IDs
 		$reply_id = bbp_get_reply_id( $r['id'] );
 		$topic_id = bbp_get_reply_topic_id( $reply_id );
+		
+		// Get who made the reply 
+		$result_reply_author_id = bbp_get_reply_author_id();
 
 		// Bail if no reply ID or user cannot moderate
 		if ( empty( $reply_id ) || ! current_user_can( 'moderate', $topic_id ) ) {
@@ -2123,8 +2126,10 @@ function bbp_reply_move_link( $args = array() ) {
 			'reply_id' => $reply_id
 		), bbp_get_reply_edit_url( $reply_id ) );
 
+		if ($result_reply_author_id == $current_user_id) {
 		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="bbp-reply-move-link">' . $r['split_text'] . '</a>' . $r['link_after'];
-
+		}
+		
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_move_link', $retval, $r, $args );
 	}
@@ -2172,6 +2177,9 @@ function bbp_topic_split_link( $args = array() ) {
 		$reply_id = bbp_get_reply_id( $r['id'] );
 		$topic_id = bbp_get_reply_topic_id( $reply_id );
 
+		// Get who made the reply 
+		$result_reply_author_id = bbp_get_reply_author_id();
+
 		// Bail if no reply/topic ID, or user cannot moderate
 		if ( empty( $reply_id ) || empty( $topic_id ) || ! current_user_can( 'moderate', $topic_id ) ) {
 			return;
@@ -2182,8 +2190,11 @@ function bbp_topic_split_link( $args = array() ) {
 			'reply_id' => $reply_id
 		), bbp_get_topic_edit_url( $topic_id ) );
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="bbp-topic-split-link">' . $r['split_text'] . '</a>' . $r['link_after'];
 
+		if ($result_reply_author_id == $current_user_id) {
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="bbp-topic-split-link">' . $r['split_text'] . '</a>' . $r['link_after'];
+		}
+		
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_split_link', $retval, $r, $args );
 	}

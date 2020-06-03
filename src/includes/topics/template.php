@@ -2817,7 +2817,7 @@ function bbp_topic_spam_link( $args = array() ) {
 		$display = bbp_is_topic_spam( $topic->ID ) ? $r['unspam_text'] : $r['spam_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_spam', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-topic_' . $topic->ID );
-		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
+		//$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_spam_link', $retval, $r, $args );

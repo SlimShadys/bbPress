@@ -2650,6 +2650,15 @@ function bbp_topic_approve_link( $args = array() ) {
 		// Get topic
 		$topic = bbp_get_topic( $r['id'] );
 
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		// Get current topic ID
+		$id_of_topic = bbp_get_topic_id(-1);
+
+		// Get current topic author ID
+		$author_id = get_post_field( 'post_author', $topic_id ); 
+
 		// Bail if no topic or current user cannot moderate
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
 			return;
@@ -2658,7 +2667,12 @@ function bbp_topic_approve_link( $args = array() ) {
 		$display = bbp_is_topic_pending( $topic->ID ) ? $r['approve_text'] : $r['unapprove_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_approve', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'approve-topic_' . $topic->ID );
-		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-approve-link">' . $display . '</a>' . $r['link_after'];
+		
+		// If the author of the topic, is the same as the one logged in
+		// then don't show this Approve button for his own Topic
+		if ( $author_id != $current_user_id ) {		
+			$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-approve-link">' . $display . '</a>' . $r['link_after'];
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_approve_link', $retval, $r, $args );

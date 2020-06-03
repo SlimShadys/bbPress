@@ -2055,6 +2055,15 @@ function bbp_reply_spam_link( $args = array() ) {
 
 		// Get reply
 		$reply = bbp_get_reply( $r['id'] );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+		
+		// Get who made the reply 
+		$result_reply_author_id = bbp_get_reply_author_id();
 
 		// Bail if no reply or current user cannot moderate
 		if ( empty( $reply ) || ! current_user_can( 'moderate', $reply->ID ) ) {
@@ -2064,7 +2073,10 @@ function bbp_reply_spam_link( $args = array() ) {
 		$display = bbp_is_reply_spam( $reply->ID ) ? $r['unspam_text'] : $r['spam_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_reply_spam', 'reply_id' => $reply->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-reply_' . $reply->ID );
+		
+		if ($result_reply_author_id != $current_user_id) {			
 		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-spam-link">' . $display . '</a>' . $r['link_after'];
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_spam_link', $retval, $r, $args );

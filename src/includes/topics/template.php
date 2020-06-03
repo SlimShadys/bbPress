@@ -2406,12 +2406,23 @@ function bbp_topic_edit_link( $args = array() ) {
 		// Get the topic
 		$topic = bbp_get_topic( $r['id'] );
 
-		// Bypass check if user has caps
-		if ( ! current_user_can( 'edit_others_topics' ) ) {
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
 
-			// User cannot edit or it is past the lock time
-			if ( empty( $topic ) || ! current_user_can( 'edit_topic', $topic->ID ) || bbp_past_edit_lock( $topic->post_date_gmt ) ) {
-				return;
+		$result = bbp_get_user_role($current_user_id);
+
+		// If the current User is Keymaster or TopicUser,
+		// don't do the checks - they CAN edit
+		if ( $result != 'bbp_topicuser') {
+			if ( $result != 'bbp_keymaster') { //php is crazy, won't let me do a double check in a single if
+				// Bypass check if user has caps
+				if ( ! current_user_can( 'edit_others_topics' ) ) {
+
+					// User cannot edit or it is past the lock time
+					if ( empty( $topic ) || ! current_user_can( 'edit_topic', $topic->ID ) || bbp_past_edit_lock( $topic->post_date_gmt ) ) {
+						return;
+					}
+				}
 			}
 		}
 

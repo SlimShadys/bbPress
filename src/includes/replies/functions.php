@@ -2232,9 +2232,29 @@ function bbp_check_reply_edit() {
 		return;
 	}
 
-	// User cannot edit topic, so redirect back to reply
-	if ( ! current_user_can( 'edit_reply', bbp_get_reply_id() ) ) {
-		bbp_redirect( bbp_get_reply_url() );
+	// Get reply
+	$reply = bbp_get_reply( $r['id'] );
+		
+	// Get current user ID
+	$current_user_id = bbp_get_current_user_id();
+		
+	// Get current user role
+	$result = bbp_get_user_role($current_user_id);	
+
+	// Get who made the reply 
+	$result_reply_author_id = bbp_get_reply_author_id();	
+
+	// If user is TopicUser, Keymaster or Participant
+	// they can edit their replies, wherever they are
+	if ( $result != 'bbp_topicuser') {
+		if ( $result != 'bbp_keymaster') { //php is crazy, won't let me do a double check in a single if
+			if ( $result != 'bbp_participant') { //php is crazy, won't let me do a double check in a single if
+				// User cannot edit topic, so redirect back to reply
+				if ( ! current_user_can( 'edit_reply', bbp_get_reply_id() ) ) {
+					bbp_redirect( bbp_get_reply_url() );
+				}
+			}
+		}
 	}
 }
 

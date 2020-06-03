@@ -2765,7 +2765,7 @@ function bbp_topic_merge_link( $args = array() ) {
 		}
 
 		$uri    = add_query_arg( array( 'action' => 'merge' ), bbp_get_topic_edit_url( $topic->ID ) );
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
+		//$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_merge_link', $retval, $r, $args );

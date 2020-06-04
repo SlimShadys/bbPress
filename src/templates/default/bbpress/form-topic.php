@@ -134,32 +134,36 @@ if ( ! bbp_is_single_forum() ) : ?>
 
 					<?php endif; ?>
 
-					<?php if ( current_user_can( 'moderate', bbp_get_topic_id() ) ) : ?>
+					<?php if ( bbp_is_user_keymaster() ) : ?>					
 
-						<?php do_action( 'bbp_theme_before_topic_form_type' ); ?>
+						<?php if ( current_user_can( 'moderate', bbp_get_topic_id() ) ) : ?>
 
-						<p>
+							<?php do_action( 'bbp_theme_before_topic_form_type' ); ?>
 
-							<label for="bbp_stick_topic"><?php esc_html_e( 'Topic Type:', 'bbpress' ); ?></label><br />
+							<p>
 
-							<?php bbp_form_topic_type_dropdown(); ?>
+								<label for="bbp_stick_topic"><?php esc_html_e( 'Topic Type:', 'bbpress' ); ?></label><br />
 
-						</p>
+								<?php bbp_form_topic_type_dropdown(); ?>
 
-						<?php do_action( 'bbp_theme_after_topic_form_type' ); ?>
+							</p>
 
-						<?php do_action( 'bbp_theme_before_topic_form_status' ); ?>
+							<?php do_action( 'bbp_theme_after_topic_form_type' ); ?>
 
-						<p>
+							<?php do_action( 'bbp_theme_before_topic_form_status' ); ?>
 
-							<label for="bbp_topic_status"><?php esc_html_e( 'Topic Status:', 'bbpress' ); ?></label><br />
+							<p>
 
-							<?php bbp_form_topic_status_dropdown(); ?>
+								<label for="bbp_topic_status"><?php esc_html_e( 'Topic Status:', 'bbpress' ); ?></label><br />
 
-						</p>
+								<?php bbp_form_topic_status_dropdown(); ?>
 
-						<?php do_action( 'bbp_theme_after_topic_form_status' ); ?>
+							</p>
 
+							<?php do_action( 'bbp_theme_after_topic_form_status' ); ?>
+
+						<?php endif; ?>
+					
 					<?php endif; ?>
 
 					<?php if ( bbp_is_subscriptions_active() && ! bbp_is_anonymous() && ( ! bbp_is_topic_edit() || ( bbp_is_topic_edit() && ! bbp_is_topic_anonymous() ) ) ) : ?>

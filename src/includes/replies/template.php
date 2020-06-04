@@ -1989,13 +1989,36 @@ function bbp_reply_trash_link( $args = array() ) {
 
 		// Get reply
 		$reply = bbp_get_reply( $r['id'] );
+
+		// Get topic ID
+		$topic_id = bbp_get_topic_id();
 		
+		// Get ID of Topic Owner
+		$author_id = bbp_get_topic_author_id( $topic_id );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
-
-		// Bail if no reply or current user cannot delete
-		if ( empty( $reply ) || ! current_user_can( 'delete_reply', $reply->ID ) ) {
-			return;
+		
+		// Now let's see if the User is Keymaster.
+		// If he is, don't check for Delete Reply check.
+		// If he isn't, first check if the Topic is the one
+		// of the current user logged in, then check if he has
+		// the proper role.
+		if ( $result != 'bbp_keymaster' ) {
+			if ( $author_id != $current_user_id ) {
+				if ( $result != 'bbp_topicuser' ) {
+					// Bail if no reply or current user cannot delete
+					if ( empty( $reply ) || ! current_user_can( 'delete_reply', $reply->ID ) ) {
+					return;
+					}
+				}
+			}
 		}
 
 		$actions    = array();
@@ -2015,11 +2038,24 @@ function bbp_reply_trash_link( $args = array() ) {
 			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'bbpress' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'bbp_toggle_reply_trash', 'sub_action' => 'delete',  'reply_id' => $reply->ID ) ), 'delete-'  . $reply->post_type . '_' . $reply->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'bbpress' ) ) . '\' );" class="bbp-reply-delete-link">' . $r['delete_text'] . '</a>';
 		}
 
-		if ($result_reply_author_id == $current_user_id) {	
-		// Process the admin links
-		$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];
+		// If he is a Keymaster, fire the link and exit.
+		if ( $result == 'bbp_keymaster' ) {
+			// Process the admin links
+			$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];
+			return apply_filters( 'bbp_get_reply_trash_link', $retval, $r, $args );
 		}
-
+		
+		// If the owner of the Topic is the one logged in,
+		// fire the Trash link, otherwise don't show this link
+		// and exit.
+		if ( $author_id == $current_user_id ) {
+			// Process the admin links
+			$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];			
+		}
+		else {
+			return;
+		}
+		
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_trash_link', $retval, $r, $args );
 	}

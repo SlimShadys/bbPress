@@ -1884,10 +1884,16 @@ function bbp_reply_edit_link( $args = array() ) {
 			return;
 		}
 
-		if ($result_reply_author_id == $current_user_id) {	
-			if ( $result == 'bbp_topicuser' || $result == 'bbp_keymaster' || $result == 'bbp_participant') {
+		if ($result == 'bbp_keymaster') {
+			$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+			return apply_filters( 'bbp_get_reply_edit_link', $retval, $r, $args );
+		}
+		
+		if ($result_reply_author_id == $current_user_id) {
+			if ( $result == 'bbp_topicuser' || $result == 'bbp_participant') {
 					$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
 			}
+		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_edit_link', $retval, $r, $args );

@@ -29,7 +29,7 @@ function bbp_has_search_results( $args = array() ) {
 
 	// Default query args
 	$default = array(
-		'post_type'           => $default_post_types,        // Forums, topics, and replies
+		'post_type'           => bbp_get_topic_post_type(),  // Topic only
 		'posts_per_page'      => bbp_get_replies_per_page(), // This many
 		'paged'               => bbp_get_paged(),            // On this page
 		'orderby'             => 'date',                     // Sorted by date

@@ -23,6 +23,10 @@ do_action( 'bbp_template_before_user_details' ); ?>
 
 	<?php do_action( 'bbp_template_before_user_details_menu_items' ); ?>
 
+	<?php
+		$ID = bbp_get_user_id();
+	?>
+
 	<div id="bbp-user-navigation">
 		<ul>
 			<li class="<?php if ( bbp_is_single_user_profile() ) : ?>current<?php endif; ?>">
@@ -75,11 +79,21 @@ do_action( 'bbp_template_before_user_details' ); ?>
 					</span>
 				</li>
 				
-				<li class="<?php if ( bbp_is_single_user_edit() ) :?>current<?php endif; ?>">
-					<span class="bbp-user-edit-link">
-						<a href="https://progettogamp.altervista.org/wp-admin/options.php?page=plugin_delete_me_confirmation" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
-					</span>
-				</li>
+				<?php if ( bbp_is_user_keymaster() ) : ?>
+					<li class="<?php if ( bbp_is_single_user_edit() ) :?>current<?php endif; ?>">
+						<span class="bbp-user-edit-link">
+							<a href="https://progettogamp.altervista.org/wp-admin/users.php?action=delete&user=<?php echo $ID; ?>&_wpnonce=f88fbab482" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
+						</span>
+					</li>
+				<?php endif; ?>
+
+				<?php if ( ! bbp_is_user_keymaster() ) : ?>				
+					<li class="<?php if ( bbp_is_single_user_edit() ) :?>current<?php endif; ?>">
+						<span class="bbp-user-edit-link">
+							<a href="https://progettogamp.altervista.org/wp-admin/options.php?page=plugin_delete_me_confirmation" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
+						</span>
+					</li>
+				<?php endif; ?>
 
 			<?php endif; ?>
 

@@ -838,7 +838,6 @@ final class bbPress {
 		$topicuser   = bbp_get_topicuser_role();
 		$participant = bbp_get_participant_role();
 		$spectator   = bbp_get_spectator_role();
-		$blocked     = bbp_get_blocked_role();
 
 		// Build the roles into one useful array
 		$this->roles[ $keymaster   ] = new WP_Role( 'Keymaster',   bbp_get_caps_for_role( $keymaster   ) );
@@ -846,7 +845,6 @@ final class bbPress {
 		$this->roles[ $topicuser   ] = new WP_Role( 'Topic User',  bbp_get_caps_for_role( $topicuser   ) );
 		$this->roles[ $participant ] = new WP_Role( 'Participant', bbp_get_caps_for_role( $participant ) );
 		$this->roles[ $spectator   ] = new WP_Role( 'Spectator',   bbp_get_caps_for_role( $spectator   ) );
-		$this->roles[ $blocked     ] = new WP_Role( 'Blocked',     bbp_get_caps_for_role( $blocked     ) );
 	}
 
 	/** Custom Rewrite Rules **************************************************/

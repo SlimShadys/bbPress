@@ -134,51 +134,6 @@ function bbp_get_caps_for_role( $role = '' ) {
 
 			break;
 
-		// Explicitly blocked
-		case bbp_get_blocked_role() :
-			$caps = array(
-
-				// Primary caps
-				'spectate'              => false,
-				'participate'           => false,
-				'moderate'              => false,
-				'throttle'              => false,
-				'view_trash'            => false,
-
-				// Forum caps
-				'publish_forums'        => false,
-				'edit_forums'           => false,
-				'edit_others_forums'    => false,
-				'delete_forums'         => false,
-				'delete_others_forums'  => false,
-				'read_private_forums'   => false,
-				'read_hidden_forums'    => false,
-
-				// Topic caps
-				'publish_topics'        => false,
-				'edit_topics'           => false,
-				'edit_others_topics'    => false,
-				'delete_topics'         => false,
-				'delete_others_topics'  => false,
-				'read_private_topics'   => false,
-
-				// Reply caps
-				'publish_replies'       => false,
-				'edit_replies'          => false,
-				'edit_others_replies'   => false,
-				'delete_replies'        => false,
-				'delete_others_replies' => false,
-				'read_private_replies'  => false,
-
-				// Topic tag caps
-				'manage_topic_tags'     => false,
-				'edit_topic_tags'       => false,
-				'delete_topic_tags'     => false,
-				'assign_topic_tags'     => false,
-			);
-
-			break;
-
 		// Topic User / Default
 		case bbp_get_topicuser_role() :
 			$caps = array(
@@ -534,19 +489,6 @@ function bbp_get_spectator_role() {
 
 	// Filter & return
 	return apply_filters( 'bbp_get_spectator_role', 'bbp_spectator' );
-}
-
-/**
- * The blocked role is for registered users that cannot spectate or participate
- *
- * @since 2.2.0 bbPress (r4284)
- *
- * @return string
- */
-function bbp_get_blocked_role() {
-
-	// Filter & return
-	return apply_filters( 'bbp_get_blocked_role', 'bbp_blocked' );
 }
 
 /**

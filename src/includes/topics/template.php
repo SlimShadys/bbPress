@@ -2435,7 +2435,7 @@ function bbp_topic_edit_link( $args = array() ) {
 			return;
 		}
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];		
 
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_edit_link', $retval, $r, $args );
@@ -2595,6 +2595,12 @@ function bbp_topic_close_link( $args = array() ) {
 
 		// Get topic
 		$topic = bbp_get_topic( $r['id'] );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
 
 		// Bail if no topic or current user cannot moderate
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
@@ -2604,10 +2610,17 @@ function bbp_topic_close_link( $args = array() ) {
 		$display = bbp_is_topic_open( $topic->ID ) ? $r['close_text'] : $r['open_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_close', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'close-topic_' . $topic->ID );
+		
+		if ( $result == 'bbp_keymaster') {
+			return;
+		}
+		else {
+			
 		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-close-link">' . $display . '</a>' . $r['link_after'];
-
+		
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_close_link', $retval, $r, $args );
+		}
 	}
 
 /**
@@ -2652,6 +2665,9 @@ function bbp_topic_approve_link( $args = array() ) {
 
 		// Get current user ID
 		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
 
 		// Get current topic ID
 		$id_of_topic = bbp_get_topic_id(-1);
@@ -2667,6 +2683,11 @@ function bbp_topic_approve_link( $args = array() ) {
 		$display = bbp_is_topic_pending( $topic->ID ) ? $r['approve_text'] : $r['unapprove_text'];
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_approve', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'approve-topic_' . $topic->ID );
+		
+		
+		if ( $result == 'bbp_keymaster') {
+			return;
+		}		
 		
 		// If the author of the topic, is the same as the one logged in
 		// then don't show this Approve button for his own Topic
@@ -2808,8 +2829,11 @@ function bbp_topic_merge_link( $args = array() ) {
 
 		$uri    = add_query_arg( array( 'action' => 'merge' ), bbp_get_topic_edit_url( $topic->ID ) );
 		
-		if ( $result == 'bbp_keymaster') {			
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
+		if ( $result == 'bbp_keymaster' || $result == 'bbp_topicuser') {
+				return;
+		}
+		else {
+			$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
 		}
 
 		// Filter & return
@@ -2869,7 +2893,10 @@ function bbp_topic_spam_link( $args = array() ) {
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_topic_spam', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-topic_' . $topic->ID );
 		
-		if ( $result == 'bbp_keymaster') {
+		if ( $result == 'bbp_keymaster' || $result == 'bbp_topicuser') {
+			return;
+		}
+		else {
 		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
 		}
 
@@ -2909,16 +2936,27 @@ function bbp_topic_reply_link( $args = array() ) {
 
 		// Get the topic to use it's ID and post_parent
 		$topic = bbp_get_topic( $r['id'] );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+		
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
 
 		// Bail if no topic or user cannot reply
 		if ( empty( $topic ) || bbp_is_single_reply() || ! bbp_current_user_can_access_create_reply_form() ) {
 			return;
 		}
 
+		if ( $result == 'bbp_keymaster') {
+			return;
+		}
+		else {
 		// Add $uri to the array, to be passed through the filter
 		$r['uri'] = '#new-post';
 		$retval   = $r['link_before'] . '<a role="button" href="' . esc_url( $r['uri'] ) . '" class="bbp-topic-reply-link">' . $r['reply_text'] . '</a>' . $r['link_after'];
-
+		}
+		
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_reply_link', $retval, $r, $args );
 	}

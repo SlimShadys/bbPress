@@ -74,6 +74,14 @@ if ( ! bbp_is_single_forum() ) : ?>
 						</div>
 
 					<?php endif; ?>
+					
+						<div class="bbp-template-notice">
+							<ul>
+								<li><?php esc_html_e( 'Nella descrizione, indicare:', 'bbpress' ); ?></li>
+								<li><?php esc_html_e( '- Luogo del progetto', 'bbpress' ); ?></li>
+								<li><?php esc_html_e( '- Numero di partecipanti', 'bbpress' ); ?></li>
+							</ul>
+						</div>
 
 					<?php do_action( 'bbp_template_notices' ); ?>
 

@@ -67,6 +67,26 @@ final class bbPress {
 	 * @var array Topic views
 	 */
 	public $views = array();
+	
+	/**
+	 * @var for costant
+	 */
+	public $BBPRESSVAR = 'bbpress';
+	
+	/**
+	 * @var for costant
+	 */
+	public $TRASHVAR = 'trash';
+	
+	/**
+	 * @var for costant
+	 */
+	public $PAGEDVAR = 'paged';
+	
+	/**
+	 * @var for costant
+	 */
+	public $LABELSVAR = 'label';
 
 	/**
 	 * @var array Overloads get_option()
@@ -141,14 +161,14 @@ final class bbPress {
 	 *
 	 * @since 2.0.0 bbPress (r2464)
 	 */
-	public function __clone() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'bbpress' ), '2.1' ); }
+	public function __clone() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', BBPRESSVAR ), '2.1' ); }
 
 	/**
 	 * A dummy magic method to prevent bbPress from being unserialized
 	 *
 	 * @since 2.0.0 bbPress (r2464)
 	 */
-	public function __wakeup() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'bbpress' ), '2.1' ); }
+	public function __wakeup() { _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', BBPRESSVAR ), '2.1' ); }
 
 	/**
 	 * Magic method for checking the existence of a certain custom field
@@ -253,7 +273,7 @@ final class bbPress {
 		$this->pending_status_id = apply_filters( 'bbp_pending_post_status', 'pending' );
 		$this->private_status_id = apply_filters( 'bbp_private_post_status', 'private' );
 		$this->hidden_status_id  = apply_filters( 'bbp_hidden_post_status',  'hidden'  );
-		$this->trash_status_id   = apply_filters( 'bbp_trash_post_status',   'trash'   );
+		$this->trash_status_id   = apply_filters( 'bbp_trash_post_status',   TRASHVAR   );
 
 		// Other identifiers
 		$this->user_id           = apply_filters( 'bbp_user_id',        'bbp_user'        );
@@ -263,7 +283,7 @@ final class bbPress {
 		$this->subs_id           = apply_filters( 'bbp_subs_id',        'bbp_subs'        );
 		$this->view_id           = apply_filters( 'bbp_view_id',        'bbp_view'        );
 		$this->edit_id           = apply_filters( 'bbp_edit_id',        'edit'            );
-		$this->paged_id          = apply_filters( 'bbp_paged_id',       'paged'           );
+		$this->paged_id          = apply_filters( 'bbp_paged_id',       PAGEDVAR           );
 		$this->search_id         = apply_filters( 'bbp_search_id',      'bbp_search'      );
 		$this->engagements_id    = apply_filters( 'bbp_engagements_id', 'bbp_engagements' );
 
@@ -294,7 +314,7 @@ final class bbPress {
 
 		/** Misc **************************************************************/
 
-		$this->domain         = 'bbpress';      // Unique identifier for retrieving translated strings
+		$this->domain         = BBPRESSVAR;      // Unique identifier for retrieving translated strings
 		$this->extend         = new stdClass(); // Plugins add data here
 		$this->errors         = new WP_Error(); // Feedback
 
@@ -507,10 +527,10 @@ final class bbPress {
 		register_post_type(
 			bbp_get_forum_post_type(),
 			apply_filters( 'bbp_register_forum_post_type', array(
-				'labels'              => bbp_get_forum_post_type_labels(),
+				LABELSVAR              => bbp_get_forum_post_type_labels(),
 				'rewrite'             => bbp_get_forum_post_type_rewrite(),
 				'supports'            => bbp_get_forum_post_type_supports(),
-				'description'         => esc_html__( 'bbPress Forums', 'bbpress' ),
+				'description'         => esc_html__( 'bbPress Forums', BBPRESSVAR ),
 				'capabilities'        => bbp_get_forum_caps(),
 				'capability_type'     => array( 'forum', 'forums' ),
 				'menu_position'       => 555555,
@@ -523,7 +543,7 @@ final class bbPress {
 				'hierarchical'        => true,
 				'query_var'           => true,
 				'menu_icon'           => '',
-				'source'              => 'bbpress',
+				'source'              => BBPRESSVAR,
 			) )
 		);
 
@@ -533,10 +553,10 @@ final class bbPress {
 		register_post_type(
 			bbp_get_topic_post_type(),
 			apply_filters( 'bbp_register_topic_post_type', array(
-				'labels'              => bbp_get_topic_post_type_labels(),
+				LABELSVAR              => bbp_get_topic_post_type_labels(),
 				'rewrite'             => bbp_get_topic_post_type_rewrite(),
 				'supports'            => bbp_get_topic_post_type_supports(),
-				'description'         => esc_html__( 'bbPress Topics', 'bbpress' ),
+				'description'         => esc_html__( 'bbPress Topics', BBPRESSVAR ),
 				'capabilities'        => bbp_get_topic_caps(),
 				'capability_type'     => array( 'topic', 'topics' ),
 				'menu_position'       => 555555,
@@ -549,7 +569,7 @@ final class bbPress {
 				'hierarchical'        => false,
 				'query_var'           => true,
 				'menu_icon'           => '',
-				'source'              => 'bbpress',
+				'source'              => BBPRESSVAR,
 			) )
 		);
 
@@ -559,10 +579,10 @@ final class bbPress {
 		register_post_type(
 			bbp_get_reply_post_type(),
 			apply_filters( 'bbp_register_reply_post_type', array(
-				'labels'              => bbp_get_reply_post_type_labels(),
+				LABELSVAR              => bbp_get_reply_post_type_labels(),
 				'rewrite'             => bbp_get_reply_post_type_rewrite(),
 				'supports'            => bbp_get_reply_post_type_supports(),
-				'description'         => esc_html__( 'bbPress Replies', 'bbpress' ),
+				'description'         => esc_html__( 'bbPress Replies', BBPRESSVAR ),
 				'capabilities'        => bbp_get_reply_caps(),
 				'capability_type'     => array( 'reply', 'replies' ),
 				'menu_position'       => 555555,
@@ -575,7 +595,7 @@ final class bbPress {
 				'hierarchical'        => false,
 				'query_var'           => true,
 				'menu_icon'           => '',
-				'source'              => 'bbpress',
+				'source'              => BBPRESSVAR,
 			) )
 		);
 	}
@@ -594,12 +614,12 @@ final class bbPress {
 		register_post_status(
 			bbp_get_closed_status_id(),
 			apply_filters( 'bbp_register_closed_post_status', array(
-				'label'                     => _x( 'Closed', 'post', 'bbpress' ),
-				'label_count'               => _nx_noop( 'Closed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>', 'post', 'bbpress' ),
+				'label'                     => _x( 'Closed', 'post', BBPRESSVAR ),
+				'label_count'               => _nx_noop( 'Closed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>', 'post', BBPRESSVAR ),
 				'public'                    => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => true,
-				'source'                    => 'bbpress'
+				'source'                    => BBPRESSVAR
 			) )
 		);
 
@@ -607,13 +627,13 @@ final class bbPress {
 		register_post_status(
 			bbp_get_spam_status_id(),
 			apply_filters( 'bbp_register_spam_post_status', array(
-				'label'                     => _x( 'Spam', 'post', 'bbpress' ),
-				'label_count'               => _nx_noop( 'Spam <span class="count">(%s)</span>', 'Spam <span class="count">(%s)</span>', 'post', 'bbpress' ),
+				'label'                     => _x( 'Spam', 'post', BBPRESSVAR ),
+				'label_count'               => _nx_noop( 'Spam <span class="count">(%s)</span>', 'Spam <span class="count">(%s)</span>', 'post', BBPRESSVAR ),
 				'protected'                 => true,
 				'exclude_from_search'       => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => false,
-				'source'                    => 'bbpress'
+				'source'                    => BBPRESSVAR
 			) )
 		);
 
@@ -621,13 +641,13 @@ final class bbPress {
 		register_post_status(
 			bbp_get_orphan_status_id(),
 			apply_filters( 'bbp_register_orphan_post_status', array(
-				'label'                     => _x( 'Orphan', 'post', 'bbpress' ),
-				'label_count'               => _nx_noop( 'Orphan <span class="count">(%s)</span>', 'Orphans <span class="count">(%s)</span>', 'post', 'bbpress' ),
+				'label'                     => _x( 'Orphan', 'post', BBPRESSVAR ),
+				'label_count'               => _nx_noop( 'Orphan <span class="count">(%s)</span>', 'Orphans <span class="count">(%s)</span>', 'post', BBPRESSVAR ),
 				'protected'                 => true,
 				'exclude_from_search'       => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => false,
-				'source'                    => 'bbpress'
+				'source'                    => BBPRESSVAR
 			) )
 		);
 
@@ -635,13 +655,13 @@ final class bbPress {
 		register_post_status(
 			bbp_get_hidden_status_id(),
 			apply_filters( 'bbp_register_hidden_post_status', array(
-				'label'                     => _x( 'Hidden', 'post', 'bbpress' ),
-				'label_count'               => _nx_noop( 'Hidden <span class="count">(%s)</span>', 'Hidden <span class="count">(%s)</span>', 'post', 'bbpress' ),
+				'label'                     => _x( 'Hidden', 'post', BBPRESSVAR ),
+				'label_count'               => _nx_noop( 'Hidden <span class="count">(%s)</span>', 'Hidden <span class="count">(%s)</span>', 'post', BBPRESSVAR ),
 				'private'                   => true,
 				'exclude_from_search'       => true,
 				'show_in_admin_status_list' => true,
 				'show_in_admin_all_list'    => true,
-				'source'                    => 'bbpress'
+				'source'                    => BBPRESSVAR
 			) )
 		);
 
@@ -655,16 +675,16 @@ final class bbPress {
 		 */
 		global $wp_post_statuses;
 
-		if ( ! empty( $wp_post_statuses['trash'] ) ) {
+		if ( ! empty( $wp_post_statuses[TRASHVAR] ) ) {
 
 			// User can view trash so set internal to false
 			if ( current_user_can( 'view_trash' ) ) {
-				$wp_post_statuses['trash']->internal  = false;
-				$wp_post_statuses['trash']->protected = true;
+				$wp_post_statuses[TRASHVAR]->internal  = false;
+				$wp_post_statuses[TRASHVAR]->protected = true;
 
 			// User cannot view trash so set internal to true
 			} else {
-				$wp_post_statuses['trash']->internal = true;
+				$wp_post_statuses[TRASHVAR]->internal = true;
 			}
 		}
 	}
@@ -681,7 +701,7 @@ final class bbPress {
 			bbp_get_topic_tag_tax_id(),
 			bbp_get_topic_post_type(),
 			apply_filters( 'bbp_register_topic_taxonomy', array(
-				'labels'                => bbp_get_topic_tag_tax_labels(),
+				LABELSVAR                => bbp_get_topic_tag_tax_labels(),
 				'rewrite'               => bbp_get_topic_tag_tax_rewrite(),
 				'capabilities'          => bbp_get_topic_tag_caps(),
 				'update_count_callback' => 'bbp_update_topic_tag_count',
@@ -691,7 +711,7 @@ final class bbPress {
 				'show_in_nav_menus'     => false,
 				'public'                => true,
 				'show_ui'               => bbp_allow_topic_tags() && current_user_can( 'bbp_topic_tags_admin' ),
-				'source'                => 'bbpress'
+				'source'                => BBPRESSVAR
 			)
 		) );
 	}
@@ -706,7 +726,7 @@ final class bbPress {
 		// Popular topics
 		bbp_register_view(
 			'popular',
-			esc_html__( 'Most popular topics', 'bbpress' ),
+			esc_html__( 'Most popular topics', BBPRESSVAR ),
 			apply_filters( 'bbp_register_view_popular', array(
 				'meta_key'      => '_bbp_reply_count',
 				'meta_type'     => 'NUMERIC',
@@ -719,7 +739,7 @@ final class bbPress {
 		// Topics with no replies
 		bbp_register_view(
 			'no-replies',
-			esc_html__( 'Topics with no replies', 'bbpress' ),
+			esc_html__( 'Topics with no replies', BBPRESSVAR ),
 			apply_filters( 'bbp_register_view_no_replies', array(
 				'meta_key'      => '_bbp_reply_count',
 				'meta_type'     => 'NUMERIC',
@@ -756,7 +776,7 @@ final class bbPress {
 			'type'              => 'integer',
 
 			// Generic count description
-			'description'       => esc_html__( 'bbPress Item Count', 'bbpress' ),
+			'description'       => esc_html__( 'bbPress Item Count', BBPRESSVAR ),
 
 			// Counts are single values
 			'single'            => true,
@@ -793,7 +813,7 @@ final class bbPress {
 		// Activity
 		register_meta( 'user', '_bbp_last_posted', array(
 			'type'              => 'integer',
-			'description'       => esc_html__( 'bbPress User Activity', 'bbpress' ),
+			'description'       => esc_html__( 'bbPress User Activity', BBPRESSVAR ),
 			'single'            => true,
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'bbp_number_not_negative',
@@ -997,7 +1017,7 @@ final class bbPress {
 		add_permastruct( $user_id, $user_slug . '/%' . $user_id . '%', array(
 			'with_front'  => false,
 			'ep_mask'     => EP_NONE,
-			'paged'       => false,
+			PAGEDVAR       => false,
 			'feed'        => false,
 			'forcomments' => false,
 			'walk_dirs'   => true,
@@ -1008,7 +1028,7 @@ final class bbPress {
 		add_permastruct( $view_id, $view_slug . '/%' . $view_id . '%', array(
 			'with_front'  => false,
 			'ep_mask'     => EP_NONE,
-			'paged'       => false,
+			PAGEDVAR       => false,
 			'feed'        => false,
 			'forcomments' => false,
 			'walk_dirs'   => true,
@@ -1019,7 +1039,7 @@ final class bbPress {
 		add_permastruct( $search_id, $search_slug . '/%' . $search_id . '%', array(
 			'with_front'  => false,
 			'ep_mask'     => EP_NONE,
-			'paged'       => true,
+			PAGEDVAR       => true,
 			'feed'        => false,
 			'forcomments' => false,
 			'walk_dirs'   => true,
@@ -1052,7 +1072,7 @@ function bbpress() {
  * actions, filters, and overrides setup without bbPress being in the way.
  */
 if ( defined( 'BBPRESS_LATE_LOAD' ) ) {
-	add_action( 'plugins_loaded', 'bbpress', (int) BBPRESS_LATE_LOAD );
+	add_action( 'plugins_loaded', BBPRESSVAR, (int) BBPRESS_LATE_LOAD );
 
 // "And now here's something we hope you'll really like!"
 } else {

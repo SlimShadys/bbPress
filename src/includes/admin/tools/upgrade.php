@@ -73,6 +73,7 @@ function bbp_admin_upgrade_page() {
 				<br class="clear">
 			</div>
 			<table class="wp-list-table widefat striped posts">
+					<caption>Forum</caption>
 				<thead>
 					<tr>
 						<td id="cb" class="manage-column column-cb check-column">

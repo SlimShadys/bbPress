@@ -27,6 +27,7 @@ function bbp_admin_reset_page() {
 
 		<form class="settings" method="post" action="">
 			<table class="form-table">
+					<caption>Forum</caption>
 				<tbody>
 					<tr valign="top">
 						<th scope="row"><?php esc_html_e( 'The following data will be removed:', 'bbpress' ); ?></th>
@@ -67,6 +68,7 @@ function bbp_admin_reset_page() {
 			</table>
 
 			<fieldset class="submit">
+             <legend>Reset bbPress</legend>
 				<input class="button-primary" type="submit" name="submit" value="<?php esc_attr_e( 'Reset bbPress', 'bbpress' ); ?>" />
 				<?php wp_nonce_field( 'bbpress-reset' ); ?>
 			</fieldset>

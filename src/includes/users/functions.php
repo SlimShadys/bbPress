@@ -124,9 +124,9 @@ function bbp_set_current_anonymous_user_data( $anonymous_data = array() ) {
 	$secure   = ( 'https' === parse_url( home_url(), PHP_URL_SCHEME ) );
 
 	// Set the cookies
-	setcookie( 'comment_author_'       . COOKIEHASH, $anonymous_data['bbp_anonymous_name'],    $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure );
-	setcookie( 'comment_author_email_' . COOKIEHASH, $anonymous_data['bbp_anonymous_email'],   $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure );
-	setcookie( 'comment_author_url_'   . COOKIEHASH, $anonymous_data['bbp_anonymous_website'], $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure );
+	setcookie( 'comment_author_'       . COOKIEHASH, $anonymous_data['bbp_anonymous_name'],    $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
+	setcookie( 'comment_author_email_' . COOKIEHASH, $anonymous_data['bbp_anonymous_email'],   $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
+	setcookie( 'comment_author_url_'   . COOKIEHASH, $anonymous_data['bbp_anonymous_website'], $expiry, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 
 /**

@@ -22,6 +22,7 @@ function bbp_add_user_form_role_field() {
 ?>
 
 	<table class="form-table">
+        <caption>Forum</caption>
 		<tr class="form-field">
 			<th scope="row"><label for="bbp-forums-role"><?php esc_html_e( 'Forum Role', 'bbpress' ); ?></label></th>
 			<td><?php

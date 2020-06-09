@@ -782,6 +782,7 @@ class BBP_Akismet {
 			<?php if ( ! empty( $history ) ) : ?>
 
 				<table>
+				  <caption>Forum</caption>
 					<tbody>
 
 						<?php foreach ( $history as $row ) : ?>

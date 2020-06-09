@@ -18,6 +18,7 @@ if ( apply_filters( 'show_password_fields', true, bbpress()->displayed_user ) ) 
 	<button type="button" class="button wp-generate-pw hide-if-no-js"><?php esc_html_e( 'Generate Password', 'bbpress' ); ?></button>
 
 	<fieldset class="bbp-form password wp-pwd hide-if-js">
+		<legend>Password</legend>
 		<span class="password-input-wrapper">
 			<input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="off" data-pw="<?php echo esc_attr( wp_generate_password( 24 ) ); ?>" aria-describedby="pass-strength-result" />
 		</span>

@@ -84,13 +84,6 @@ class BBP_Topic_Replies_List_Table extends WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		return array();
-
-		// @todo cap checks
-		return array(
-			'unapprove' => esc_html__( 'Unapprove', 'bbpress' ),
-			'spam'      => esc_html__( 'Spam',      'bbpress' ),
-			'trash'     => esc_html__( 'Trash',     'bbpress' )
-		);
 	}
 
 	/**
@@ -263,6 +256,7 @@ class BBP_Topic_Replies_List_Table extends WP_List_Table {
 		$this->display_tablenav( 'top' ); ?>
 
 		<table id="bbp-reply-list" class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+		<caption>Forum</caption>
 			<thead>
 				<tr>
 					<?php $this->print_column_headers(); ?>

@@ -105,6 +105,8 @@ function bbp_dashboard_widget_right_now() {
 		<p class="sub"><?php esc_html_e( 'Discussion', 'bbpress' ); ?></p>
 
 		<table>
+		
+        <caption>Forum</caption>
 
 			<tr class="first">
 
@@ -190,6 +192,8 @@ function bbp_dashboard_widget_right_now() {
 		<p class="sub"><?php esc_html_e( 'Users &amp; Moderation', 'bbpress' ); ?></p>
 
 		<table>
+		
+        <caption>Forum</caption>
 
 			<tr class="first">
 

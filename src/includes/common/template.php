@@ -757,9 +757,9 @@ function bbp_is_single_user() {
 		$result = bbp_get_user_role($current_user_id);
 		
 		// If the current User is Keymaster, leave it Keymaster
-		// otherwise, switch to Topic User
+		// otherwise, switch to participant
 		if ( $result != 'bbp_keymaster' ) {
-			bbp_set_user_role( $current_user_id, "bbp_topicuser" );	
+			bbp_set_user_role( $current_user_id, "bbp_participant" );	
 		}
 		
 		$retval = true;

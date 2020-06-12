@@ -2387,7 +2387,7 @@ function bbp_breadcrumb( $args = array() ) {
 
 			// If capable, include a link to edit the tag
 			if ( current_user_can( 'manage_topic_tags' ) ) {
-				$tag_data[] = '<a href="' . esc_url( bbp_get_topic_tag_edit_link() ) . '" class="bbp-edit-topic-tag-link">' . esc_html__( '(Edit)', 'bbpress' ) . '</a>';
+				//$tag_data[] = '<a href="' . esc_url( bbp_get_topic_tag_edit_link() ) . '" class="bbp-edit-topic-tag-link">' . esc_html__( '(Edit)', 'bbpress' ) . '</a>';
 			}
 
 			// Implode the results of the tag data

@@ -43,13 +43,13 @@ do_action( 'bbp_template_before_user_details' ); ?>
 
 			<li class="<?php if ( bbp_is_single_user_topics() ) : ?>current<?php endif; ?>">
 				<span class='bbp-user-topics-created-link'>
-					<a href="<?php bbp_user_topics_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Topics Started", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Topics Started', 'bbpress' ); ?></a>
+					<a href="<?php bbp_user_topics_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti creati", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti creati', 'bbpress' ); ?></a>
 				</span>
 			</li>
 
 			<li class="<?php if ( bbp_is_single_user_replies() ) : ?>current<?php endif; ?>">
 				<span class='bbp-user-replies-created-link'>
-					<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Replies Created", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Replies Created', 'bbpress' ); ?></a>
+					<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti di cui fai parte", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti di cui fai parte', 'bbpress' ); ?></a>
 				</span>
 			</li>
 

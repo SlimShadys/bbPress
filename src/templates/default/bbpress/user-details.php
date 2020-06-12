@@ -25,6 +25,12 @@ do_action( 'bbp_template_before_user_details' ); ?>
 
 	<?php
 		$ID = bbp_get_user_id();
+		
+		//Get the URL and append ID
+		$maybe_url = 'https://progettogamp.altervista.org/wp-admin/users.php?action=delete&user='.$ID;
+		
+		//Now get the previous URL, with the correct nonce
+		$complete_url = wp_nonce_url( $maybe_url, 'bulk-users' );
 	?>
 
 	<div id="bbp-user-navigation">
@@ -84,7 +90,7 @@ do_action( 'bbp_template_before_user_details' ); ?>
 				<?php if ( bbp_is_user_keymaster() ) : ?>
 					<li class="<?php if ( bbp_is_single_user_edit() ) :?>current<?php endif; ?>">
 						<span class="bbp-user-edit-link">
-							<a href="https://progettogamp.altervista.org/wp-admin/users.php?action=delete&user=<?php echo $ID; ?>&_wpnonce=f88fbab482" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
+							<a href="<?php echo $complete_url; ?>" title="<?php printf( esc_attr__( "Elimina profilo", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Elimina profilo', 'bbpress' ); ?></a>
 						</span>
 					</li>
 				<?php endif; ?>

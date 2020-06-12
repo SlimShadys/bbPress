@@ -1585,6 +1585,12 @@ function bbp_reply_to_link( $args = array() ) {
 		// Get the reply to use it's ID and post_parent
 		$reply    = bbp_get_reply( $r['id'] );
 		$topic_id = bbp_get_reply_topic_id( $reply->ID );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
 
 		// Bail if no reply or user cannot reply
 		if ( empty( $reply ) || empty( $topic_id ) || bbp_is_single_reply() || ! bbp_current_user_can_access_create_reply_form() ) {
@@ -1615,6 +1621,10 @@ function bbp_reply_to_link( $args = array() ) {
 		} else {
 			$onclick  = '';
 		}
+		
+		if ($result == 'bbp_keymaster') {
+			return;
+		}	
 
 		// Add $uri to the array, to be passed through the filter
 		$r['uri'] = $uri;
@@ -1924,6 +1934,16 @@ function bbp_reply_edit_url( $reply_id = 0 ) {
 		if ( empty( $reply ) ) {
 			return;
 		}
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
+
+		// Get current user role
+		$result = bbp_get_user_role($current_user_id);
+		
+		if ($result == 'bbp_keymaster') {
+			return;
+		}
 
 		$reply_link = bbp_remove_view_all( bbp_get_reply_permalink( $reply_id ) );
 
@@ -2005,18 +2025,18 @@ function bbp_reply_trash_link( $args = array() ) {
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
 		
-		// Now let's see if the User is Keymaster.
-		// If he is, don't check for Delete Reply check.
-		// If he isn't, first check if the Topic is the one
+		if ($result == 'bbp_keymaster') {
+			return;
+		}
+		
+		// Now first check if the Topic is the one
 		// of the current user logged in, then check if he has
 		// the proper role.
-		if ( $result != 'bbp_keymaster' ) {
-			if ( $author_id != $current_user_id ) {
-				if ( $result != 'bbp_topicuser' ) {
-					// Bail if no reply or current user cannot delete
-					if ( empty( $reply ) || ! current_user_can( 'delete_reply', $reply->ID ) ) {
-					return;
-					}
+		if ( $author_id != $current_user_id ) {
+			if ( $result != 'bbp_topicuser' ) {
+				// Bail if no reply or current user cannot delete
+				if ( empty( $reply ) || ! current_user_can( 'delete_reply', $reply->ID ) ) {
+				return;
 				}
 			}
 		}
@@ -2106,6 +2126,10 @@ function bbp_reply_spam_link( $args = array() ) {
 		
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
+		
+		if ($result == 'bbp_keymaster') {
+			return;
+		}
 
 		// Bail if no reply or current user cannot moderate
 		if ( empty( $reply ) || ! current_user_can( 'moderate', $reply->ID ) ) {
@@ -2301,6 +2325,10 @@ function bbp_reply_approve_link( $args = array() ) {
 
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
+		
+		if ($result == 'bbp_keymaster') {
+			return;
+		}
 
 		// Bail if no reply or current user cannot moderate
 		if ( empty( $reply ) || ! current_user_can( 'moderate', $reply->ID ) ) {

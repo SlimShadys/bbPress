@@ -2756,7 +2756,7 @@ function bbp_topic_stick_link( $args = array() ) {
 		// Get current user role
 		$result = bbp_get_user_role($current_user_id);
 		
-		if ( $result == 'bbp_keymaster') {
+		if ( $result == 'bbp_keymaster' || $result == 'bbp_topicuser' || $result == 'bbp_participant' ) {
 			return;
 		}
 

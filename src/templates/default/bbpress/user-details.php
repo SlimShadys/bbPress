@@ -47,14 +47,35 @@ do_action( 'bbp_template_before_user_details' ); ?>
 				</span>
 			</li>
 
+			<?php if ( bbp_is_user_keymaster() ) : ?>
+					<?php if ( $profile_ID != $current_user_id ) : ?>
+							<li class="<?php if ( bbp_is_single_user_topics() ) : ?>current<?php endif; ?>">
+								<span class='bbp-user-topics-created-link'>
+									<a href="<?php bbp_user_topics_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti creati", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti creati', 'bbpress' ); ?></a>
+								</span>
+							</li>
+					<?php endif; ?>
+			<?php endif; ?>
+
+			<?php if ( ! bbp_is_user_keymaster() ) : ?>
 			<li class="<?php if ( bbp_is_single_user_topics() ) : ?>current<?php endif; ?>">
 				<span class='bbp-user-topics-created-link'>
 					<a href="<?php bbp_user_topics_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti creati", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti creati', 'bbpress' ); ?></a>
 				</span>
 			</li>
+			<?php endif; ?>
 
 			<li class="<?php if ( bbp_is_single_user_replies() ) : ?>current<?php endif; ?>">
-			
+
+				<?php if ( bbp_is_user_keymaster() ) : ?>
+					<?php if ( $profile_ID != $current_user_id ) : ?>
+						<span class='bbp-user-replies-created-link'>
+							<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Partecipazioni", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Partecipazioni', 'bbpress' ); ?></a>
+						</span>
+					<?php endif; ?>
+				<?php endif; ?>
+
+			<?php if ( ! bbp_is_user_keymaster() ) : ?>	
 				<?php if ( $profile_ID == $current_user_id ) : ?>	
 					<span class='bbp-user-replies-created-link'>
 						<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti di cui fai parte", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti di cui fai parte', 'bbpress' ); ?></a>
@@ -65,7 +86,8 @@ do_action( 'bbp_template_before_user_details' ); ?>
 					<span class='bbp-user-replies-created-link'>
 						<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Partecipazioni", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Partecipazioni', 'bbpress' ); ?></a>
 					</span>
-				<?php endif; ?>	
+				<?php endif; ?>
+			<?php endif; ?>
 				
 			</li>
 

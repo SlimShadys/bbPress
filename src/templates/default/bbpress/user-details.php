@@ -31,6 +31,12 @@ do_action( 'bbp_template_before_user_details' ); ?>
 		
 		//Now get the previous URL, with the correct nonce
 		$complete_url = wp_nonce_url( $maybe_url, 'bulk-users' );
+		
+		// Get ID of the profile we are viewing
+		$profile_ID = bbp_get_user_id( $user->ID );
+		
+		// Get current user ID
+		$current_user_id = bbp_get_current_user_id();
 	?>
 
 	<div id="bbp-user-navigation">
@@ -48,9 +54,19 @@ do_action( 'bbp_template_before_user_details' ); ?>
 			</li>
 
 			<li class="<?php if ( bbp_is_single_user_replies() ) : ?>current<?php endif; ?>">
-				<span class='bbp-user-replies-created-link'>
-					<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti di cui fai parte", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti di cui fai parte', 'bbpress' ); ?></a>
-				</span>
+			
+				<?php if ( $profile_ID == $current_user_id ) : ?>	
+					<span class='bbp-user-replies-created-link'>
+						<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Progetti di cui fai parte", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Progetti di cui fai parte', 'bbpress' ); ?></a>
+					</span>
+				<?php endif; ?>
+
+				<?php if ( $profile_ID != $current_user_id ) : ?>	
+					<span class='bbp-user-replies-created-link'>
+						<a href="<?php bbp_user_replies_created_url(); ?>" title="<?php printf( esc_attr__( "%s's Partecipazioni", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Partecipazioni', 'bbpress' ); ?></a>
+					</span>
+				<?php endif; ?>	
+				
 			</li>
 
 			<!-- <?php if ( bbp_is_engagements_active() ) : ?>

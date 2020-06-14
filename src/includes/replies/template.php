@@ -1870,6 +1870,9 @@ function bbp_reply_edit_link( $args = array() ) {
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
 		
+		// Get status of reply
+		$reply_status = bbp_get_reply_status( $reply );
+		
 		// If the current User is Keymaster or TopicUser or Participant,
 		// don't do the checks - they CAN edit
 		if ( $result != 'bbp_topicuser') {
@@ -1901,7 +1904,9 @@ function bbp_reply_edit_link( $args = array() ) {
 		
 		if ($result_reply_author_id == $current_user_id) {
 			if ( $result == 'bbp_topicuser' || $result == 'bbp_participant') {
+				if ( $reply_status != 'pending') {
 					$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+				}
 			}
 		}
 

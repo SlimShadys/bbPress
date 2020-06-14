@@ -2127,7 +2127,8 @@ function bbp_reply_spam_link( $args = array() ) {
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
 		
-		if ($result == 'bbp_keymaster') {
+		// Return immediately (we don't want Spam button)
+		if ($result == 'bbp_keymaster' || $result == 'bbp_topicuser' || $result == 'bbp_participant') {
 			return;
 		}
 
@@ -2140,9 +2141,7 @@ function bbp_reply_spam_link( $args = array() ) {
 		$uri     = add_query_arg( array( 'action' => 'bbp_toggle_reply_spam', 'reply_id' => $reply->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-reply_' . $reply->ID );
 		
-		if ($result_reply_author_id != $current_user_id) {			
 		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-spam-link">' . $display . '</a>' . $r['link_after'];
-		}
 
 		// Filter & return
 		return apply_filters( 'bbp_get_reply_spam_link', $retval, $r, $args );

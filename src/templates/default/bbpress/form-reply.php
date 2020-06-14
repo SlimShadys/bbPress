@@ -88,16 +88,16 @@ if ( bbp_is_reply_edit() ) : ?>
 
 							<?php do_action( 'bbp_theme_before_reply_form_tags' ); ?>
 
-							<p>
+							<!--<p>
 								<label for="bbp_topic_tags"><?php esc_html_e( 'Tags:', 'bbpress' ); ?></label><br />
 								<input type="text" value="<?php bbp_form_topic_tags(); ?>" size="40" name="bbp_topic_tags" id="bbp_topic_tags" <?php disabled( bbp_is_topic_spam() ); ?> />
-							</p>
+							</p>-->
 
 							<?php do_action( 'bbp_theme_after_reply_form_tags' ); ?>
 
 						<?php endif; ?>
 
-						<?php if ( bbp_is_subscriptions_active() && ! bbp_is_anonymous() && ( ! bbp_is_reply_edit() || ( bbp_is_reply_edit() && ! bbp_is_reply_anonymous() ) ) ) : ?>
+						<!--<?php if ( bbp_is_subscriptions_active() && ! bbp_is_anonymous() && ( ! bbp_is_reply_edit() || ( bbp_is_reply_edit() && ! bbp_is_reply_anonymous() ) ) ) : ?>
 
 							<?php do_action( 'bbp_theme_before_reply_form_subscription' ); ?>
 
@@ -119,7 +119,7 @@ if ( bbp_is_reply_edit() ) : ?>
 
 							<?php do_action( 'bbp_theme_after_reply_form_subscription' ); ?>
 
-						<?php endif; ?>
+						<?php endif; ?>-->
 
 						<?php if ( bbp_is_reply_edit() ) : ?>
 
@@ -145,7 +145,7 @@ if ( bbp_is_reply_edit() ) : ?>
 
 							<?php endif; ?>
 
-							<?php if ( bbp_allow_revisions() ) : ?>
+							<!--<?php if ( bbp_allow_revisions() ) : ?>
 
 								<?php do_action( 'bbp_theme_before_reply_form_revisions' ); ?>
 
@@ -163,7 +163,7 @@ if ( bbp_is_reply_edit() ) : ?>
 
 								<?php do_action( 'bbp_theme_after_reply_form_revisions' ); ?>
 
-							<?php endif; ?>
+							<?php endif; ?>-->
 
 						<?php endif; ?>
 

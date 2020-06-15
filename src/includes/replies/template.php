@@ -1366,12 +1366,12 @@ function bbp_reply_author_role( $args = array() ) {
 
 		// Backwards compatibilty with old 'class' argument
 		if ( ! empty( $r['class'] ) ) {
-			$author_role = sprintf( '%1$s<div class="%2$s">%3$s</div>%4$s', $r['before'], esc_attr( $r['class'] ), esc_html( $role ), $r['after'] );
+			$author_role = sprintf( '' );
 
 		// Simpler before & after arguments
 		// https://bbpress.trac.wordpress.org/ticket/2557
 		} else {
-			$author_role = $r['before'] . $role . $r['after'];
+			$author_role = sprintf( '' );
 		}
 
 		// Filter & return

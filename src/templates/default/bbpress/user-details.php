@@ -116,6 +116,16 @@ do_action( 'bbp_template_before_user_details' ); ?>
 						</span>
 					</li>
 				<?php endif; ?> -->
+				
+				<?php if ( bbp_is_user_keymaster() ) : ?>
+					<?php if ( $profile_ID == $current_user_id ) : ?>
+				<li class="<?php if ( bbp_is_single_user_edit() ) : ?>current<?php endif; ?>">
+					<span class="bbp-user-edit-link">
+						<a href="<?php bbp_user_profile_edit_url(); ?>" title="<?php printf( esc_attr__( "Edit %s's Profile", 'bbpress' ), bbp_get_displayed_user_field( 'display_name' ) ); ?>"><?php esc_html_e( 'Edit', 'bbpress' ); ?></a>
+					</span>
+				</li>
+					<?php endif; ?>			
+				<?php endif; ?>						
 
 				<?php if ( ! bbp_is_user_keymaster() ) : ?>
 				<li class="<?php if ( bbp_is_single_user_edit() ) : ?>current<?php endif; ?>">

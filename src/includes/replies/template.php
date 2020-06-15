@@ -2344,7 +2344,9 @@ function bbp_reply_approve_link( $args = array() ) {
 		$uri     = wp_nonce_url( $uri, 'approve-reply_' . $reply->ID );		
 		
 		if ($result_reply_author_id != $current_user_id) {		
-			$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-approve-link">' . $display . '</a>' . $r['link_after'];
+			if ($reply_status == 'pending') {
+				$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-approve-link">' . $display . '</a>' . $r['link_after'];
+			}	
 		}
 
 		// Filter & return

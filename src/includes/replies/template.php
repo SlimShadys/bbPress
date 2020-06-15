@@ -2007,7 +2007,7 @@ function bbp_reply_trash_link( $args = array() ) {
 			'link_before'  => '',
 			'link_after'   => '',
 			'sep'          => ' | ',
-			'trash_text'   => esc_html__( 'Trash',   'bbpress' ),
+			'trash_text'   => esc_html__( 'Rifiuta',   'bbpress' ),
 			'restore_text' => esc_html__( 'Restore', 'bbpress' ),
 			'delete_text'  => esc_html__( 'Delete',  'bbpress' )
 		), 'get_reply_trash_link' );

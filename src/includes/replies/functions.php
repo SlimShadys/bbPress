@@ -529,12 +529,6 @@ function bbp_edit_reply_handler( $action = '' ) {
 		// Check users ability to create new reply
 		if ( ! bbp_is_reply_anonymous( $reply_id ) ) {
 
-			// User cannot edit this reply
-			if ( ! current_user_can( 'edit_reply', $reply_id ) ) {
-				bbp_add_error( 'bbp_edit_reply_permission', __( '<strong>ERROR</strong>: You do not have permission to edit that reply.', 'bbpress' ) );
-				return;
-			}
-
 			// Set reply author
 			$reply_author = bbp_get_reply_author_id( $reply_id );
 

@@ -2030,6 +2030,9 @@ function bbp_reply_trash_link( $args = array() ) {
 		// Get who made the reply 
 		$result_reply_author_id = bbp_get_reply_author_id();
 		
+		// Get status of reply
+		$reply_status = bbp_get_reply_status( $reply );
+		
 		if ($result == 'bbp_keymaster') {
 			return;
 		}
@@ -2074,8 +2077,10 @@ function bbp_reply_trash_link( $args = array() ) {
 		// fire the Trash link, otherwise don't show this link
 		// and exit.
 		if ( $author_id == $current_user_id ) {
-			// Process the admin links
-			$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];			
+			if ($reply_status == 'pending') {
+				// Process the admin links
+				$retval = $r['link_before'] . implode( $r['sep'], $actions ) . $r['link_after'];
+			}
 		}
 		else {
 			return;

@@ -42,6 +42,19 @@ do_action( 'bbp_template_before_topics_loop' ); ?>
 			</p>
 		</div><!-- .tr -->
 	</li>
+	
+	<script>
+
+		function reloadIt() {
+			if (window.location.href.substr(-2) !== "?r") {
+				window.location = window.location.href + "?r";
+			}
+		}
+
+		setTimeout('reloadIt()', 0)();
+
+	</script>
+	
 </ul><!-- #bbp-forum-<?php bbp_forum_id(); ?> -->
 
 <?php do_action( 'bbp_template_after_topics_loop' );

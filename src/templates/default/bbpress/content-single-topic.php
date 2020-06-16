@@ -55,5 +55,17 @@ defined( 'ABSPATH' ) || exit;
 	<?php bbp_get_template_part( 'alert', 'topic-lock' ); ?>
 
 	<?php do_action( 'bbp_template_after_single_topic' ); ?>
+	
+	<script>
+
+		function reloadIt() {
+			if (window.location.href.substr(-2) !== "?r") {
+				window.location = window.location.href + "?r";
+			}
+		}
+
+		setTimeout('reloadIt()', 0)();
+
+	</script>
 
 </div>

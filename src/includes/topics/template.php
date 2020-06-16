@@ -2611,6 +2611,12 @@ function bbp_topic_close_link( $args = array() ) {
 
 		// Get current user role
 		$result = bbp_get_user_role($current_user_id);
+		
+		// Get who made the topic
+		$result_topic_author_id = bbp_get_topic_author_id();
+		
+		// Get status of topic
+		$topic_status = bbp_get_reply_status( $topic );
 
 		// Bail if no topic or current user cannot moderate
 		if ( empty( $topic ) || ! current_user_can( 'moderate', $topic->ID ) ) {
@@ -2624,12 +2630,14 @@ function bbp_topic_close_link( $args = array() ) {
 		if ( $result == 'bbp_keymaster') {
 			return;
 		}
-		else {
-			
+
+		if ( $result_topic_author_id == $current_user_id && $topic_status != 'closed') {
+
 		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-close-link">' . $display . '</a>' . $r['link_after'];
 		
 		// Filter & return
 		return apply_filters( 'bbp_get_topic_close_link', $retval, $r, $args );
+		
 		}
 	}
 

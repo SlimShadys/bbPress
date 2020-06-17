@@ -1873,6 +1873,12 @@ function bbp_reply_edit_link( $args = array() ) {
 		// Get status of reply
 		$reply_status = bbp_get_reply_status( $reply );
 		
+		// Get topic ID
+		$topic_id = bbp_get_topic_id();
+
+		// Get ID of Topic Owner
+		$author_id = bbp_get_topic_author_id( $topic_id );
+		
 		// If the current User is Keymaster or TopicUser or Participant,
 		// don't do the checks - they CAN edit
 		if ( $result != 'bbp_topicuser') {
@@ -1902,11 +1908,17 @@ function bbp_reply_edit_link( $args = array() ) {
 			return apply_filters( 'bbp_get_reply_edit_link', $retval, $r, $args );
 		}
 		
-		if ($result_reply_author_id == $current_user_id) {
-			if ( $result == 'bbp_topicuser' || $result == 'bbp_participant') {
-				if ( $reply_status != 'pending') {
-					$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
-				}
+		if ($author_id != $current_user_id || $result_reply_author_id == $current_user_id) {
+			return;
+		}
+		
+		if ($author_id == $current_user_id && $result_reply_author_id != $current_user_id) {
+			return;
+		}
+		
+		if ( $result == 'bbp_topicuser' || $result == 'bbp_participant') {
+			if ( $reply_status != 'pending') {
+				$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
 			}
 		}
 
